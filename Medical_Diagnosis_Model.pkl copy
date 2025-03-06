@@ -1,0 +1,42 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score,confusion_matrix
+from sklearn.preprocessing import LabelEncoder
+
+columns=['Pregnnancies','Glucose','Blood Pressure ','Skin Thickness','Insulin','BMI','Diabetes Pedigree Function','Age','Outcome']
+data=pd.read_csv(names=columns)
+
+print("Datasetpreview")
+print(data.head())
+
+x=data.drop('outcome',axis=1)
+y=data['outcome']
+
+X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
+
+model=RandomForestClassifier(n_estimators=100,random_state=42)
+
+model.fit(x_train,y_train)
+
+y_pred=model.predict(X_test)
+
+accuracy=accuracy_score(y_test,y_pred)
+print(f"Accuracy: {accuarcy* 100:.2f}%")
+print("Confusion matirx")
+print(confusion_matrix(y_test,y_pred))
+
+prediciton=model.predict(new_data)
+
+if prediction == 1:
+    print("Diagnosis :Diabetic")
+else:
+    print("Diagnosis: Non diabetic")
+
+
+import joblib
+joblib.dump(model,'diabetes_diagnosis_model.pkl')
+print("Model saved as 'diabetes_diagnosis_model.pkl'")
+
+                        
+
